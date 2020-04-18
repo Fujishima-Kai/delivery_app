@@ -8,12 +8,10 @@
 			<div class="col-md-4 mb-2">
 			  　<div class="card">
 				　<div class="card-header">
-					<a href="#" class="list-group-item">
-					　{{$shop->name}}
-				　　</a>
+					<a href="/shop/{{ $shop->id }}">{{$shop->name}}</a>
 				　</div>
                   <div class="card-body">
-					　<td>{{$shop->address}}</td>					  
+					　{{$shop->address}}					  
 				  </div>
 			    </div>
 			</div>
