@@ -16,6 +16,7 @@
 			    </div>
 			</div>
 		   @endforeach
+		   <a href="/shops/create">新規登録</a>
 		</div>
 	  </div>
 	</body>

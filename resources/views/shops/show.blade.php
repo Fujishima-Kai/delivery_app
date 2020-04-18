@@ -9,12 +9,17 @@
 		<div class="col-md-8">
 			<div class="card">
 				<div class="card-header">
-					<a href="/shop/{{ $shop->id }}">{{$shop->name}}</a>	
+					{{$shop->name}}	
 				</div>
 				<div class="card-body">
 					{{$shop->address}}
 					{{$shop->image_url}}
 				</div>
+				<a href="{{ route('shops.edit', ['id' => $shop->id]) }}">編集</a>
+				<form action="{{ action('ShopController@index')}}" method='get'>
+            		@csrf
+            		<button type="submit" class="btn btn-block btn-default btn-sm">一覧に戻る</button>
+      			</form>
 			</div>
 		</div>
 	</div>
