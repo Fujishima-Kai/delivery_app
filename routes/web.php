@@ -22,14 +22,14 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 
-Route::get('/shops', 'ShopController@index')->name('shops.index');
+Route::get('/shops', 'ShopController@index')->name('shops.index')->middleware('auth');
 
-Route::get('/shop/{id}', 'ShopController@show')->name('shops.show');
+Route::get('/shop/{id}', 'ShopController@show')->name('shops.show')->middleware('auth');
 
-Route::get('/shops/create', 'ShopController@create')->name('shops.create');
+Route::get('/shops/create', 'ShopController@create')->name('shops.create')->middleware('auth');
 Route::post('/shops/create', 'ShopController@store')->name('shops.store');
 
-Route::get('/shops/{id}/edit', 'ShopController@edit')->name('shops.edit');
+Route::get('/shops/{id}/edit', 'ShopController@edit')->name('shops.edit')->middleware('auth');
 Route::post('/shops/{id}/edit', 'ShopController@update')->name('shops.update');
 
 Route::post('/shops/{id}/', 'ShopController@delete')->name('shops.delete'); 

@@ -51,7 +51,14 @@ class ShopController extends Controller
     }
 
     public function edit($id){
+
         $shop = Shop::find($id);
+        
+		if (Auth::user()->id != $shop->user_id) {
+		    return redirect()->route('shops.index');
+		}
+
+
         return view('shops.edit', [
         	'shop' => $shop,
         ]);
@@ -68,6 +75,16 @@ class ShopController extends Controller
         $shop->save();
 
         return redirect()->route('shops.index');
+    }
+
+    public function delete($id)
+    {
+        //削除対象レコードを検索
+        $shop = Shop::find($id);
+        //削除
+        $shop->delete();
+        //リダイレクト
+        return redirect('/shops');
     }
 
 
