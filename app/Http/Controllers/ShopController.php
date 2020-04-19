@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\user;
 use App\Shop;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+
 
 class ShopController extends Controller
 {
@@ -39,12 +43,11 @@ class ShopController extends Controller
         $shop->name = $request->name;
         $shop->address = $request->address;
         $shop->image_url = $request->image_url;
-        $shop->user_id = Auth::user()->shop();
+        $shop->user_id = Auth::user()->id;
+
         $shop->save();
-        
-        return redirect()->route('shop.index', [
-        	'id' => $shop->id,
-        ]);
+
+        return redirect()->route('shops.index');
     }
 
     public function edit($id){
@@ -64,9 +67,7 @@ class ShopController extends Controller
         $shop->image_url = $request->image_url;
         $shop->save();
 
-        return redirect()->route('shops.index', [
-        	'id' => $shop->id,
-        ]);
+        return redirect()->route('shops.index');
     }
 
 
