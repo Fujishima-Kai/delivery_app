@@ -33,3 +33,12 @@ Route::get('/shops/{id}/edit', 'ShopController@edit')->name('shops.edit')->middl
 Route::post('/shops/{id}/edit', 'ShopController@update')->name('shops.update');
 
 Route::post('/shops/{id}/', 'ShopController@delete')->name('shops.delete'); 
+
+
+Route::get('/shops/{shop_id}/menus', 'MenuController@index')->name('menus.index')->middleware('auth');
+
+
+
+
+
+

@@ -4,20 +4,21 @@
     <body>
       <div class="container">
 		<div class="row justify-content-left">
-		  @foreach($shops as $shop)
+			<?php dd($user_id); ?>
+		  @foreach($menus as $menu)
 			<div class="col-md-4 mb-2">
 			  　<div class="card">
 				　<div class="card-header">
-					<a href="/shop/{{ $shop->id }}">{{$shop->name}}</a>
+					{{$menu->name}}
 				　</div>
                   <div class="card-body">
-					　{{$shop->address}}					  
+					　{{$menu->description}}
+					  {{$menu->image_url}}					  
 				  </div>
-				  <a href="{{ route('menus.index', ['shop_id' => $shop->id]) }}">このお店のメニューを見る</a>
+				  <a href="#">メニューを選ぶ</a>
 			    </div>
 			</div>
 		   @endforeach
-		   <a href="/shops/create">新規登録</a>
 		</div>
 	  </div>
 	</body>

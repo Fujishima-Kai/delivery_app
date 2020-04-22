@@ -18,7 +18,7 @@ class ShopController extends Controller
 		return view ('shops.index', [
 
 			'shops' => $shops,
-
+        
 		]);
 	}
 
