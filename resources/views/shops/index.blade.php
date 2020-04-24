@@ -8,7 +8,7 @@
 			<div class="col-md-4 mb-2">
 			  　<div class="card">
 				　<div class="card-header">
-					<a href="/shop/{{ $shop->id }}">{{$shop->name}}</a>
+					<a href="/shops/{{ $shop->id }}">{{$shop->name}}</a>
 				　</div>
                   <div class="card-body">
 					　{{$shop->address}}					  

@@ -13,10 +13,7 @@
                         <button type="submit" class="btn btn-primary btn-sm">更新する</button><br>
                   </div>
             </form>
-            <form action="{{ action('ShopController@index')}}" method='get'>
-                  @csrf
-                  <button type="submit" class="btn btn-block btn-default btn-sm">一覧に戻る</button>
-            </form>
+            <a href="{{ route('shops.index') }}">一覧に戻る</a>
             </div>
       </body>
 </html>

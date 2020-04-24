@@ -4,7 +4,6 @@
     <body>
       <div class="container">
 		<div class="row justify-content-left">
-			<?php dd($user_id); ?>
 		  @foreach($menus as $menu)
 			<div class="col-md-4 mb-2">
 			  　<div class="card">
@@ -12,14 +11,15 @@
 					{{$menu->name}}
 				　</div>
                   <div class="card-body">
-					　{{$menu->description}}
 					  {{$menu->image_url}}					  
 				  </div>
-				  <a href="#">メニューを選ぶ</a>
+				  <a href="{{ route('menus.show', ['shop_id' => $shop->id, 'menu_id' => $menu->id]) }}">このメニューを詳しく見る</a>
 			    </div>
 			</div>
 		   @endforeach
 		</div>
+		<a href="{{ route('shops.index') }}">お店の一覧に戻る</a>
+		<a href="{{ route('menus.create', ['shop_id' => $shop->id]) }}">新規作成</a>
 	  </div>
 	</body>
 </html>
