@@ -15,10 +15,9 @@ class OrderController extends Controller
 {
     public function index(int $id)
 	{
-		//$orders = Auth::user($id)->orders()->get();
-		$user = User::find($id);
-		$orders = $user->order()->get();
-		return view ('orders.index', ['orders' => $orders, 'id' => $user->id]);
+		$orders = Auth::user($id)->orders()->get();
+		//$orders = $user->order()->get();
+		return view ('orders.index', ['orders' => $orders, 'id' => $id]);
 	}
 
 	public function show(int $shop_id, int $menu_id)

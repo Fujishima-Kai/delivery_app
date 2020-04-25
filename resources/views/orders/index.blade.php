@@ -4,21 +4,22 @@
     <body>
       <div class="container">
 		<div class="row justify-content-left">
-		  @foreach($shops as $shop)
+		  @foreach($orders as $order)
 			<div class="col-md-4 mb-2">
 			  　<div class="card">
 				　<div class="card-header">
-					<a href="/shops/{{ $shop->id }}">{{$shop->name}}</a>
+					<p>注文者：{{$order->user_id}}</p>>
 				　</div>
                   <div class="card-body">
-					　{{$shop->address}}					  
+                  	<p>ご注文品：{{$order->menu_id}}</p>
+					<p>数量：{{$order->quantity}}</p>
+					<p>お届け先：{{$order->address}}</p>			  
 				  </div>
-				  <a href="{{ route('menus.index', ['shop_id' => $shop->id]) }}">このお店のメニューを見る</a>
+				  <a href="/shops/create">注文を確定する</a>
 			    </div>
 			</div>
-		   @endforeach
-		   <a href="/shops/create">新規登録</a>
-		   <a href="{{ route('orders.index', ['id' => $id]) }}">注文一覧へ</a>
+		   @endforeach		   
+		   <a href="{{ route('shops.index')}}">お店一覧へ</a>
 		</div>
 	  </div>
 	</body>
