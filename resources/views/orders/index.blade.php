@@ -18,7 +18,7 @@
 			</div>
 		   @endforeach
 		   <a href="/shops/create">新規登録</a>
-		   <a href="{{ route('orders.index', ['id' => $user->id]) }}">注文一覧へ</a>
+		   <a href="{{ route('orders.index', ['id' => $id]) }}">注文一覧へ</a>
 		</div>
 	  </div>
 	</body>

@@ -17,4 +17,10 @@ class Shop extends Model
 		return $this->hasMany('App\Menu');
 
 	}
+
+	public function orders(){
+
+		return $this->hasMany('App\Order');
+
+	}
 }

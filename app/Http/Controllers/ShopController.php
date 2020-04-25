@@ -13,10 +13,12 @@ class ShopController extends Controller
 {
 	public function index(){
 
+        $user = User::find(1);
 		$shops = Shop::all();
 
 		return view ('shops.index', [
 
+            'user' => $user,
 			'shops' => $shops,
         
 		]);

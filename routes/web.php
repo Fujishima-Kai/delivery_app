@@ -50,3 +50,34 @@ Route::post('/shops/{shop_id}/menus/{menu_id}', 'MenuController@delete')->name('
 
 
 
+
+Route::get('/shops/{id}/orders', 'OrderController@index')->name('orders.index')->middleware('auth')->where(['id' => '[0-9]+']);
+
+Route::get('/shops/{shop_id}/orders/{order_id}', 'OrderController@show')->name('orders.show')->middleware('auth')->where(['id' => '[0-9]+']);
+
+Route::get('/shops/{shop_id}/orders/create', 'OrderController@create')->name('orders.create')->middleware('auth');
+Route::post('/shops/{shop_id}/orders/create', 'OrderController@store')->name('orders.store')->middleware('auth');
+
+Route::get('/shops/{shop_id}/orders/{order_id}/edit', 'OrderController@edit')->name('orders.edit')->middleware('auth')->where(['id' => '[0-9]+']);
+Route::post('/shops/{shop_id}/orders/{order_id}/edit', 'OrderController@update')->name('orders.update')->middleware('auth')->where(['id' => '[0-9]+']);
+
+Route::post('/shops/{shop_id}/orders/{order_id}', 'OrderController@delete')->name('orders.delete')->middleware('auth')->where(['id' => '[0-9]+']); 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
