@@ -8,18 +8,19 @@
 			<div class="col-md-4 mb-2">
 			  　<div class="card">
 				　<div class="card-header">
-					<p>注文者：{{$order->user_id}}</p>>
+					<p>注文者ID：{{$order->user_id}}</p>>
 				　</div>
                   <div class="card-body">
-                  	<p>ご注文品：{{$order->menu_id}}</p>
-					<p>数量：{{$order->quantity}}</p>
-					<p>お届け先：{{$order->address}}</p>			  
+                  		<p>{{ $order->menu->name }}</p>
+                  		<p>{{ $order->menu->description }}</p>
+                  		<p>{{ $order->menu->shop->name }}</p>
 				  </div>
-				  <a href="/shops/create">注文を確定する</a>
+				  <a href="#">注文を確定する</a>
+				  
 			    </div>
 			</div>
 		   @endforeach		   
-		   <a href="{{ route('shops.index')}}">お店一覧へ</a>
+		   <a href="{{ route('shops.index')}}">お店一覧へ戻る</a>
 		</div>
 	  </div>
 	</body>

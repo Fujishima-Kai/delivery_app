@@ -11,25 +11,37 @@ use Illuminate\Support\Facades\Auth;
 
 class ShopController extends Controller
 {
-	public function index(){
+	public function indexForUser(){
 
         $user = Auth::user();
 		$shops = Shop::all();
 
-		return view ('shops.index', [
+		return view ('shops.indexforuser', [
 
-            'id' => $user->id,
+            'user' => $user,
 			'shops' => $shops,
         
 		]);
 	}
 
+    public function indexForOwner(){
 
-	public function show ($id){
+        $user = Auth::user();
+        $shops = Shop::all();
+        
+        return view ('shops.index', [
 
-		$shop = Shop::find($id);
+            'user' => $user,
+            'shops' => $shops,
+        
+        ]);
+    }
 
-		return view('shops.show', ['shop' => $shop]);
+
+	public function show ($shop_name){
+
+		$shop = Shop::where('name', $shop_name)->first();
+        return view('shops.show', ['shop' => $shop]);
 	}
 
 
@@ -52,9 +64,9 @@ class ShopController extends Controller
         return redirect()->route('shops.index');
     }
 
-    public function edit($id){
+    public function edit($shop_name){
 
-        $shop = Shop::find($id);
+        $shop = Shop::where('name', $shop_name)->first();
         
 		if (Auth::user()->id != $shop->user_id) {
 		    return redirect()->route('shops.index');
@@ -66,10 +78,10 @@ class ShopController extends Controller
         ]);
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $shop_name)
     {
 
-    	$shop = Shop::find($id);
+    	$shop = Shop::where('name', $shop_name)->first();
 
         $shop->name = $request->name;
         $shop->address = $request->address;
@@ -79,13 +91,11 @@ class ShopController extends Controller
         return redirect()->route('shops.index');
     }
 
-    public function delete($id)
+    public function delete($shop_name)
     {
-        //削除対象レコードを検索
-        $shop = Shop::find($id);
-        //削除
+        $shop = Shop::where('name', $shop_name)->first();
+        
         $shop->delete();
-        //リダイレクト
         return redirect('/shops');
     }
 

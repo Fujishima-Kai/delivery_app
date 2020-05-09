@@ -13,70 +13,74 @@ use Carbon\Carbon;
 
 class MenuController extends Controller
 {
-	public function index(int $shop_id)
+	public function index($shop_name)
 	{
-		$shop = Shop::find($shop_id);
+		$shop = Shop::where('name', $shop_name)->first();
 		$menus = $shop->menus()->get();
 		return view ('menus.index', ['menus' => $menus, 'shop' => $shop]);
 	}
 
-	public function show(int $shop_id, int $menu_id)
+	public function show($menu_name)
 	{
-		$menu = Menu::find($menu_id);
-		$shop = Shop::find($shop_id);
+		$menu = Menu::where('name', $menu_name)->first();
+		$shop = $menu->shop()->first();
 		return view('menus.show', ['menu' => $menu, 'shop' => $shop]);
 	}
 
-	public function create(int $shop_id)
+	public function create($shop_name)
 	{
-		$shop = Shop::find($shop_id);
+		$shop = Shop::where('name', $shop_name)->first();
 		return view('menus.create', ['shop' => $shop]);
 	}
 
-	public function store(int $shop_id, Request $request)
+	public function store($shop_name, Request $request)
 	{
+		
+		$shop = Shop::where('name', $shop_name)->first();
+		
 		$menu = new Menu;
 		$menu->name = $request->name;
         $menu->description = $request->description;
         $menu->image_url = $request->image_url;
-        $menu->shop_id = $shop_id;
+        $menu->shop_id = $shop->id;
 
         $menu->save();
 
-        return redirect()->route('menus.index', ['shop_id' => $shop_id]);
+        return redirect()->route('menus.index', ['shop_name' => $shop_name]);
 	}
 
-	public function edit(int $shop_id, int $menu_id)
+	public function edit($menu_name)
 	{
 		
-        $menu = Menu::find($menu_id);
-        $shop = Shop::find($shop_id);
+        $menu = Menu::where('name', $menu_name)->first();
+		$shop = $menu->shop()->first();
 
-        return view('menus.edit', [ 'shop_id' => $shop_id, 'menu_id' => $menu_id, 'menu' => $menu, 'shop' => $shop]);
+        return view('menus.edit', [ 'menu' => $menu, 'shop' => $shop]);
 	}
 
-	public function update(Request $request, int $shop_id, int $menu_id)
+	public function update($menu_name, Request $request)
 	{
-		$menu = Menu::find($menu_id);
+		$menu = Menu::where('name', $menu_name)->first();
+		$shop = $menu->shop()->first();
 
         $menu->name = $request->name;
         $menu->description = $request->description;
         $menu->image_url = $request->image_url;
-     	$menu->shop_id = $shop_id;
+     	$menu->shop_id = $shop->id;
 
         $menu->save();
 
-        return redirect()->route('menus.index', ['shop_id' => $shop_id, 'menu_id' => $menu_id, 'menu' => $menu]);
+        return redirect()->route('menus.index', ['shop_name' => $shop->name]);
 	}
 
-	public function delete(int $shop_id, int $menu_id)
+	public function delete($menu_name)
     {
-        //削除対象レコードを検索
-        $menu = Menu::find($menu_id);
-        //削除
+        
+        $menu = Menu::where('name', $menu_name)->first();
+        $shop = $menu->shop()->first();
         $menu->delete();
         //リダイレクト
-        return redirect()->route('menus.index', ['shop_id' => $shop_id, 'menu_id' => $menu_id, 'menu' => $menu]);
+        return redirect()->route('menus.index', ['shop_name' => $shop->name]);
     }
 
 }

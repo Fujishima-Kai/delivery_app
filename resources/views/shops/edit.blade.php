@@ -1,7 +1,7 @@
 <html>
 <head></head>
 <body>
-      <form action="{{action('ShopController@update', $shop->id)}}" method='post'>
+      <form action="{{action('ShopController@update', $shop->name)}}" method='post'>
             @csrf
             <ul class="list-group">
                   <li class="list-group-item"> ショップ名<input class="form-control" name="name" type="text" value="{{ $shop->name }}"></li>

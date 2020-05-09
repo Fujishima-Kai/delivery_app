@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Shop;
 use App\Menu;
+use App\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
@@ -13,70 +14,85 @@ use Carbon\Carbon;
 
 class OrderController extends Controller
 {
-    public function index(int $id)
+    public function indexForUser($user_name)
 	{
-		$orders = Auth::user($id)->orders()->get();
-		//$orders = $user->order()->get();
-		return view ('orders.index', ['orders' => $orders, 'id' => $id]);
+		$user = Auth::user()->first();
+		$orders = Auth::user()->orders()->get();
+		return view ('orders.indexforuser', ['orders' => $orders, 'user' => $user]);
 	}
 
-	public function show(int $shop_id, int $menu_id)
+
+	public function indexForShop(int $shop_id)
 	{
-		$menu = Menu::find($menu_id);
-		$shop = Shop::find($shop_id);
-		return view('menus.show', ['menu' => $menu, 'shop' => $shop]);
+		$shop = Shop::where('name', $shop_name)->first();
+		$orders = $shop->orders()->get();
+		dd($orders);
+		return view ('orders.index', ['orders' => $orders]);
 	}
 
-	public function create(int $shop_id)
-	{
-		$shop = Shop::find($shop_id);
-		return view('menus.create', ['shop' => $shop]);
-	}
 
-	public function store(int $shop_id, Request $request)
-	{
-		$menu = new Menu;
-		$menu->name = $request->name;
-        $menu->description = $request->description;
-        $menu->image_url = $request->image_url;
-        $menu->shop_id = $shop_id;
 
-        $menu->save();
-
-        return redirect()->route('menus.index', ['shop_id' => $shop_id]);
-	}
-
-	public function edit(int $shop_id, int $menu_id)
+	public function show()
 	{
 		
-        $menu = Menu::find($menu_id);
-        $shop = Shop::find($shop_id);
-
-        return view('menus.edit', [ 'shop_id' => $shop_id, 'menu_id' => $menu_id, 'menu' => $menu, 'shop' => $shop]);
 	}
 
-	public function update(Request $request, int $shop_id, int $menu_id)
+	public function create(int $menu_id)
 	{
+		$user = Auth::user()->first();		
 		$menu = Menu::find($menu_id);
+		$shop = $menu->shop()->first();
 
-        $menu->name = $request->name;
-        $menu->description = $request->description;
-        $menu->image_url = $request->image_url;
-     	$menu->shop_id = $shop_id;
-
-        $menu->save();
-
-        return redirect()->route('menus.index', ['shop_id' => $shop_id, 'menu_id' => $menu_id, 'menu' => $menu]);
+		return view('orders.create', ['shop' => $shop, 'menu' => $menu, 'user' => $user]);
 	}
 
-	public function delete(int $shop_id, int $menu_id)
+	public function store(Request $request, int $menu_id)
+	{
+
+		$user = Auth::user()->first();		
+		$menu = Menu::find($menu_id);
+		$shop = $menu->shop()->first();
+
+		$order = new Order;
+		$order->user_id = $user->id;
+        $order->menu_id = $menu_id;
+        $order->quantity = $request->quantity;
+        $order->address = $request->address;
+        $order->save();
+
+        return redirect()->route('orders.indexforuser', ['user_name' => $user->name]);
+	}
+
+	public function edit(int $order_id)
+	{
+		
+        $order = Order::find($order_id);
+        $menu = $order->menu()->first();
+
+        return view('orders.edit', [ 'menu' => $menu, 'order' => $order]);
+	}
+
+	public function update(Request $request, int $menu_id, int $order_id)
+	{
+		$order = Order::find($order_id);
+
+        $order->quantity = $request->quantity;
+        $order->address = $request->address;
+        $order->save();
+        $order->user_id = Auth::user()->first();
+
+        return redirect()->route('orders.index', ['id' => $order->user_id]);
+	}
+
+	public function delete(int $menu_id, int $order_id)
     {
         //削除対象レコードを検索
-        $menu = Menu::find($menu_id);
+        $order = Order::find($order_id);
+        $order->user_id = Auth::user()->get();
         //削除
-        $menu->delete();
+        $order->delete();
         //リダイレクト
-        return redirect()->route('menus.index', ['shop_id' => $shop_id, 'menu_id' => $menu_id, 'menu' => $menu]);
+        return redirect()->route('orders.index', ['id' => $order->user_id]);
     }
 
 }

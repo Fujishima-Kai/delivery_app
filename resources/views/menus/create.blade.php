@@ -1,7 +1,7 @@
 <html>
 <head></head>
 <body>
-      <form method="post" action="{{ route('menus.store', ['shop_id' => $shop->id])}}">
+      <form method="post" action="{{ route('menus.store', ['shop_name' => $shop->name])}}">
       @csrf
 
       <ul>
@@ -15,7 +15,7 @@
                <button type="submit" class="btn btn-primary btn-sm">登録する</button><br>
             </div>
           </form>
-            <a href="{{ route('menus.index', ['shop_id' => $shop->id]) }}">一覧に戻る</a>
+            <a href="{{ route('menus.index', ['shop_name' => $shop->name]) }}">一覧に戻る</a>
       </div>
 </body>
 </html>
